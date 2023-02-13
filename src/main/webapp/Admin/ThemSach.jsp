@@ -1,0 +1,233 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="Bean.XacNhanBean"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Thêm sách</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="https://cdn0.fahasa.com/media/favicon/default/favicon4.ico" type="image/x-icon" />
+<!-- Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+	rel="stylesheet">
+
+<!-- Icon -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+	integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- Bootstrap -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="Assets/sach.css">
+
+</head>
+<style>
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #f5f5f5;
+	height: 100vh;
+	font-family: 'Montserrat', sans-serif;
+	font-family: 'Poppins', sans-serif !important;
+}
+
+button, input, [tabindex] {
+	outline: none;
+	border: none;
+}
+
+.small {
+	min-width: 100px;
+	padding: 8px 20px;
+}
+
+.form-control:focus {
+	box-shadow: none;
+	border-color: #CF111a;
+}
+
+.btn, btn-primary {
+	border: none;
+}
+
+.btn:focus, .btn-primary:focus {
+	box-shadow: none !important;
+}
+
+a.text-body:hover {
+	text-decoration: none;
+	color: #CF111A !important;
+	font-weight: bold;
+}
+</style>
+<body>
+
+	<nav
+		class="navbar navbar_2 navbar-expand-md bg-white navbar-light fixed-top">
+		<div class="container">
+
+			<a class="navbar-brand" href="SachController" style="color: #CF111A;"><b>MinhKhai</b></a>
+
+			<div class="collapse navbar-collapse" id="collapsibleNavId">
+
+				<form class="form-inline ml-auto my-2 my-lg-0 mr-3"
+					action="SachController" method="get">
+					<div class="input-group" style="width: 520px;">
+						<input name="txttk" type="text" class="form-control"
+							aria-label="Small" placeholder="Nhập sách cần tìm kiếm...">
+						<div class="input-group-append">
+							<button name="butt" type="submit" class="btn"
+								style="background-color: #CF111A; color: white;">
+								<i class="fa fa-search"></i>
+							</button>
+						</div>
+					</div>
+				</form>
+
+				<ul class="navbar-nav mb-1 ml-auto">
+					<li class="nav-item"><a
+						class="nav-link text-dark text-uppercase"
+						href="AdminLogoutController"> <i
+							class="fa-solid fa-right-from-bracket"></i> logout
+					</a></li>
+
+					<li class="nav-item account" type="button"><c:choose>
+							<c:when test="${sessionScope.ad == null }">
+								<a class="nav-link text-dark text-uppercase"
+									href="AdminLoginController" style="display: inline-block">
+									<i class="fa fa-user"></i>Login
+								</a>
+							</c:when>
+							<c:otherwise>
+								<a class="nav-link text-dark text-uppercase" href="#"
+									style="display: inline-block"> <i class="fa fa-user"></i>
+									Hi: ${ sessionScope.ad.getTendn() }
+								</a>
+							</c:otherwise>
+						</c:choose></li>
+
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<nav class="navbar navbar-expand-lg navbar-dark mt-5"
+		style="background-color: #CF111A">
+		<ul class="navbar-nav" style="margin-top: 10px;">
+			<li class="nav-item d-flex align-items-center"><a
+				class="nav-link font-weight-bold text-white" href="AdminController">TRANG
+					CHỦ</a></li>
+			<li class="nav-item"><a
+				class="nav-link font-weight-bold text-white"
+				href="AdminQuanLyLoaiController">QUẢN LÝ LOẠI</a></li>
+			<li class="nav-item"><a
+				class="nav-link font-weight-bold text-white"
+				href="AdminQuanLySachController">QUẢN LÝ SÁCH</a></li>
+			<li class="nav-item"><a
+				class="nav-link font-weight-bold text-white"
+				href="XacNhanController">XÁC NHẬN</a></li>
+			<li class="nav-item"><a
+				class="nav-link font-weight-bold text-white"
+				href="AdminDanhSachChuyenTienController">DANH SÁCH CHUYỂN TIỀN</a></li>
+		</ul>
+
+	</nav>
+
+
+	<div class="row" style="margin: 0">
+
+
+
+		<div class="p-5 ml-auto mr-auto mt-3 rounded"
+			style="background: white; height: auto">
+
+			<form action="AdminThemSachController" method="post" enctype="multipart/form-data">
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="inputEmail4">Mã sách</label> <input type="text" required
+							name="txtmasach" name="" class="form-control" id="inputEmail4">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputPassword4">Tên sách</label> <input
+							name="txttensach" required type="text" class="form-control" 
+							id="inputPassword4">
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="inputEmail4">Số lượng</label> <input type="text" required
+							name="txtsoluong" name="" class="form-control" id="inputEmail4">
+					</div>
+					<div class="form-group col-md-4">
+						<label for="inputPassword4">Số tập</label> <input type="text" required
+							name="txtsotap" name="" class="form-control" id="inputPassword4">
+					</div>
+					<div class="form-group col-md-4">
+						<label for="inputPassword4">Giá</label> <input type="text" required
+							name="txtgia" name="" class="form-control" id="inputPassword4">
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="inputState">Mã loại</label> <select id="inputState"
+							name="maloai" class="form-control">
+							<c:forEach items="${dsloai }" var="s">
+								<option value="${s.getMaloai() }">${s.getTenloai() }</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputPassword4">Tác giả</label> <input type="text" required
+							name="txttacgia" class="form-control" id="inputPassword4">
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="inputEmail4">Ngày nhập</label> <input type="date" required
+							name="txtngaynhap" class="form-control" id="inputEmail4">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputPassword4">Ảnh</label> <input type="file" required
+							name="txtanh" accept="image/png, image/jpeg"
+							class="form-control-file" id="exampleFormControlFile1">
+					</div>
+				</div>
+
+
+				<button type="submit" class="btn btn-primary" name="btnSave">
+					<i class="fa-solid fa-floppy-disk"></i> Lưu dữ liệu
+				</button>
+				<button type="submit" class="btn btn-primary" name="btnBack">
+					<i class="fa-solid fa-circle-left"></i> Quay lại
+				</button>
+			</form>
+
+
+		</div>
+
+
+
+	</div>
+
+
+</body>
+</html>
